@@ -1,0 +1,71 @@
+<template>
+    <div class="slds-page-header">
+        <div class="slds-page-header__row">
+            <div class="slds-page-header__col-title">
+                <h1 class="slds-page-header__title slds-truncate">Contact List</h1>
+            </div>
+            
+            <div class="slds-page-header__col-actions slds-grid slds-align-middle">
+                <div class="slds-size_1-of-2">
+                    <lightning-input 
+                        type="text" 
+                        placeholder="Search..."
+
+                        value={strSearchInputValue}
+                        onchange={handleInputChange}
+                    >
+                    </lightning-input>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <lightning-button 
+                        data-type="New Contact" 
+                        label="New Contact" 
+                        onclick={handleCreateNewContact}
+                    >
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <lightning-datatable
+        key-field="Id"
+        data={lstContacts}
+        columns={lstColumns}
+        onrowaction={handleRowActions}
+    >
+    </lightning-datatable>
+
+    <template if:true={boolDisplayModal}>
+        <c-exam-modal 
+        >
+            <div slot="title">
+                <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate" >
+                    {strModalTitle}
+                </h1>
+            </div>
+
+            <div slot="body">
+                <template if:true={boolIsDelete}>
+                    <div class="slds-text-align_center">
+                        <h1 class="slds-text-heading_large slds-text-color_strong">Are you sure?</h1>
+                    </div>
+                </template>
+                <template if:true={boolIsCreateOrUpdate}>
+                    <c-exam-form
+                        jsn-row-fields={jsnRowFields}
+                        lst-columns={lstColumns}
+                        onsave={getJsnRowFields}
+                    >
+                    </c-exam-form>
+                </template>
+            </div>
+
+            <div slot="footer">
+                <button class="slds-button slds-button_neutral" aria-label="Cancel and close" onclick={handleCloseModal}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={handleSave} >{strSaveBtnText}</button>
+            </div>
+
+        </c-exam-modal>
+    </template>
+</template>

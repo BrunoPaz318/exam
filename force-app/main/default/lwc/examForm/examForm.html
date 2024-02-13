@@ -1,0 +1,11 @@
+<template>
+    <div class="slds-grid slds-gutters slds-wrap">
+        <template for:each={lstFieldValues} for:item="field">
+            <div key={field.fieldName} class="slds-col slds-size_1-of-2">
+                <lightning-input type="text" label={field.label} data-id={field.fieldName} value={field.value}
+                    onchange={handleFieldChange}>
+                </lightning-input>
+            </div>
+        </template>
+    </div>
+</template>
